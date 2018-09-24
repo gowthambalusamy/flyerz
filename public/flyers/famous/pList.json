@@ -1,0 +1,5 @@
+{
+    "whatsapp": "919710342817",
+    "currency": "Rs.",
+    "products": [{"pName":"Special","pPrice":"50","pDescription":"-","pSKU":"1","x1":"75","x2":"277","y1":"123","y2":"340"},{"pName":"Mini","pPrice":"25","pDescription":"-","pSKU":"2","x1":"333","x2":"513","y1":"130","y2":"341"},{"pName":"Cone ice-cream","pPrice":"20","pDescription":"-","pSKU":"3","x1":"618","x2":"785","y1":"127","y2":"343"}]
+}

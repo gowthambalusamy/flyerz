@@ -1,0 +1,32 @@
+{
+    "whatsapp":"917598765943",
+    "currency":"Rs.",
+    "products": [{
+        "pName": "Grapeseed 750ml",
+        "pPrice": "3.88",
+        "pDescription": "demo",
+        "pSKU": "1",
+        "x1": "17",
+        "x2": "178",
+        "y1": "80",
+        "y2": "237"
+    }, {
+        "pName": "Tamarind",
+        "pPrice": "3.59",
+        "pDescription": "demo",
+        "pSKU": "2",
+        "x1": "188",
+        "x2": "369",
+        "y1": "75",
+        "y2": "221"
+    }, {
+        "pName": "Salmon steak",
+        "pPrice": "5.88",
+        "pDescription": "demo",
+        "pSKU": "3",
+        "x1": "186",
+        "x2": "346",
+        "y1": "628",
+        "y2": "759"
+    }]
+}

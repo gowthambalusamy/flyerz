@@ -1,0 +1,77 @@
+{
+    "whatsapp": "919710342817",
+    "currency": "Rs.",
+    "products": [{
+        "pName": "7cm Electric Sparklers (Rajkanna)",
+        "pPrice": "12",
+        "pDescription": "-",
+        "pSKU": "1",
+        "x1": "46",
+        "x2": "231",
+        "y1": "245",
+        "y2": "574"
+    }, {
+        "pName": "Flower pots small",
+        "pPrice": "30",
+        "pDescription": "-",
+        "pSKU": "2",
+        "x1": "257",
+        "x2": "415",
+        "y1": "295",
+        "y2": "577"
+    }, {
+        "pName": "Baby rocket",
+        "pPrice": "26",
+        "pDescription": "-",
+        "pSKU": "3",
+        "x1": "469",
+        "x2": "662",
+        "y1": "267",
+        "y2": "580"
+    }, {
+        "pName": "Flower pots super delux",
+        "pPrice": "63",
+        "pDescription": "-",
+        "pSKU": "4",
+        "x1": "50",
+        "x2": "283",
+        "y1": "615",
+        "y2": "907"
+    }, {
+        "pName": "Electric stone",
+        "pPrice": "32",
+        "pDescription": "-",
+        "pSKU": "5",
+        "x1": "303",
+        "x2": "637",
+        "y1": "743",
+        "y2": "935"
+    }, {
+        "pName": "Pencil",
+        "pPrice": "38",
+        "pDescription": "-",
+        "pSKU": "6",
+        "x1": "48",
+        "x2": "217",
+        "y1": "963",
+        "y2": "1188"
+    }, {
+        "pName": "Giant chorsa",
+        "pPrice": "20",
+        "pDescription": "-",
+        "pSKU": "7",
+        "x1": "259",
+        "x2": "507",
+        "y1": "1007",
+        "y2": "1185"
+    }, {
+        "pName": "3 Sound",
+        "pPrice": "49",
+        "pDescription": "-",
+        "pSKU": "8",
+        "x1": "544",
+        "x2": "756",
+        "y1": "1031",
+        "y2": "1188"
+    }]
+}

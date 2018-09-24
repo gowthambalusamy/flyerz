@@ -1,0 +1,526 @@
+<link rel="stylesheet" type="text/css" href="css/imgareaselect-default.css" />
+<script type="text/javascript" src="scripts/jquery.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.imgareaselect.pack.js"></script>
+<link rel="stylesheet" href="https://bootswatch.com/3/paper/bootstrap.css" media="screen">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    #flyerViewer{
+        display:none;
+    }
+    #landingViewer{
+        color:white
+    }
+    .pName {
+        /* font-size: 20px; */
+        font-weight: bold
+    }
+    #controller{
+        display:none;
+    }
+    /* .pPrice {
+        font-size: 15px
+    } */
+
+    #flyerImg{
+        margin-top:50px;
+    }
+
+    .form-control{
+        color:white;
+    }
+
+    .row{
+        margin-top:-15px
+    }
+
+    .footer {
+        position: fixed;
+        right: 30;
+        top: 10;
+        /* width: 100%; */
+        /* background-color: red; */
+        color: white;
+        text-align: right;
+        z-index: 10000;
+    }
+
+    .row{
+       margin-left: -40px !important;
+    }
+
+    .cart-number{
+        position: fixed;
+        right: 46;
+        top: 32;
+        width: 28px;
+        height:26px;
+        background-color: white;
+        color: red;
+        text-align: center;
+        z-index: 9999999;
+        font-size: 15px;
+    }
+
+    #cart-items {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.89);
+        font-size: 13px;
+        color:white;
+        cursor: pointer;
+        z-index: 9999999;
+        overflow: auto;
+    }
+    .overlay {
+        position: absolute;
+        top: 214;
+        left: 260;
+        width: 50px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.8);
+        font-size: 20px;
+        color:white;
+        cursor: pointer;
+    }
+    .overlay-close {
+        position: absolute;
+        top: 214;
+        right: 260;
+        width: 50px;
+        height: 40px;
+        background-color: rgba(250, 8, 8, 0.8);
+        font-size: 20px;
+        color:white;
+        cursor: pointer;
+    }
+body{
+    background-color: black;
+}
+</style>
+
+<body oncontextmenu="return false;">
+    <div id="landingViewer">
+        <h1 style="color:white">Welcome to flyerz.xyz</h1>
+    </div>
+    <div id="flyerViewer">
+        <div class="cart-container col-sm-12" style="background-color: black; height: 50px;position:fixed;z-index:99999; width:100%;top:0px">
+            <h4 style="color:white;top:0px;position: relative;">Flyerz.xyz</h4>
+            <div class="cart-number"><span id="cartQty">0</span></div>
+            <div class="footer"><img onclick="$('#cart-items').show()" src="list.png" height="60px">
+                <div id="cart"></div>
+            </div>
+
+            <div id="cart-items" class="col-sm-12">
+                <h4 class="col-sm-12" style="color:white">Cart items <button onclick="removeAll()" class="btn btn-primary btn-xs">Clear
+                        all</button> <span onclick="$('#cart-items').hide()" class="pull-right">X</span></h4>
+                <hr>
+                <div class="col-sm-6">
+                    <div class="col-sm-12" style="margin-left:-20px">
+                        <div class="col-xs-6">Item</div>
+                        <div class="col-xs-2">Price</div>
+                        <div class="col-xs-2">Qty</div>
+                        <div class="col-xs-2">Amount</div>
+                    </div>
+                    <div class="col-sm-12" id="cart-item-list"></div>
+                    <h3 class="col-sm-12 pull-right" style="color:white" id="cartTotal"></h3>
+
+                    <div class="col-sm-12 sendList" style="padding:10px">
+                        <center>
+                            <hr>
+                            <a class="col-sm-12 btn btn-primary" href="" id="whatsappURL" style="display:none">Send to
+                                <span id="waNumber"></span></a></center>
+                    </div>
+
+                </div>
+                <div class="col-sm-6">
+
+                    <!-- <div class="col-sm-6 sendList" style="padding:40px">
+                    
+                </div> -->
+                    <div class="col-sm-12 uProfile" style="padding:20px;color:black;display:non1e;background-color: white1">
+                        <h4 class="loginPrompt" style="color:white;">Enter your profile to send the shopping
+                            list</h4>
+                        <legend style="color:white">Your details</legend>
+                        <input class="col-sm-12 form-control" type="text" id="uNameInput" placeholder="Please enter your name">
+                        <input class="col-sm-12 form-control" type="text" id="uPhoneInput" placeholder="Please enter your phone number">
+                        <textarea class="col-sm-12 form-control" id="uAddressInput" placeholder="Please enter your full address"></textarea>
+                        <center><button onclick="saveProfile()" style="margin-top:20px" class="btn btn-primary">Save my
+                                profile</button></center>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" id="flyerImg" style="overflow: auto">
+            <!-- <img id="photo" class="photo" src="https://cnet1.cbsistatic.com/img/7u9f_XcdxaXd50zaH7MXckXYKGg=/936x527/2016/11/11/be38a690-e1a1-4968-af6b-ce297491b746/walmart-2016.png"> -->
+            <img id="photo" class="photo" src="">
+            <!-- <div class="overlay"></div> -->
+        </div>
+        <div id="controller" class="col-sm-2" style="position: fixed; overflow: auto;top:80px; right: 0px;z-index: 9999; background-color: white; height:100%">
+            <center>
+                <input placeholder="SKU" id="pSKU" type="text">
+                <input placeholder="Name of the product" id="pName" type="text">
+                <input placeholder="Price" id="pPrice" type="number">
+                <input placeholder="Description" id="pDescription" type="text">
+                <hr>
+                <small>
+                    <input class="col-sm-6" type="text" id="x1" class="x_axis">
+                    <input class="col-sm-6" type="text" id="x2">
+                    <input class="col-sm-6" type="text" id="y1" class="x_axis">
+                    <input class="col-sm-6" type="text" id="y2">
+                    <br>
+                </small>
+                <button class="btn btn-primary" onclick="addProduct()">Save</button>
+                <button class="btn btn-primary" onclick="importList()">Import</button>
+                <a id="exportList" class="btn btn-primary" onclick="exportList()">Export</a>
+            </center>
+            <hr>
+            <div id="pLists"></div>
+            <textarea class="col-sm-12" id="exportItems"></textarea>
+
+        </div>
+    </div>
+</body>
+
+
+<script type="text/javascript">
+    var pList = []
+    var sList = []
+    var uProfile = {}
+    var whatsapp = ""
+    var currency = ""
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+
+
+    var currentFlyerId = getUrlParameter('flyerId')
+    var isController = getUrlParameter("isAdmin")
+
+    $("#landingViewer").show()
+    if (isController == 'true') {
+        $("#flyerImg").removeClass('col-md-12')
+        $("#flyerImg").addClass('col-md-10')
+        $("#controller").show()
+        $("#cart").hide()
+    }
+
+    $.getJSON("flyers/" + currentFlyerId + "/pList.json", function (data) {
+        // pList = data;
+        pList = data['products']
+        $("#exportItems").val(JSON.stringify(pList))
+        whatsapp = data['whatsapp']
+        currency = data['currency']
+        $("#waNumber").html("+" + whatsapp)
+        renderPList()
+    });
+
+    function removeAll() {
+        var confirmation = confirm("Do you want to remove all items?");
+        if (confirmation) {
+            sList = []
+            localStorage.removeItem(currentFlyerId)
+            renderQty()
+            $("#flyerImg").html('<img id="photo" class="photo" src="">')
+            $("#photo").attr('src',
+                "flyers/" + currentFlyerId + "/flyer.jpg"
+            );
+            $("#cartTotal").html("Total amount: " + currency + "0.00")
+            alert("Removed all items from the cart.")
+            location.reload(true);
+        } else {
+
+        }
+
+    }
+
+    function prepareMsg() {
+        newLine = "%0D%0A"
+        myNumber = whatsapp
+        msg = ""
+        if (uProfile != null) {
+            msg = "Order by: " + uProfile['uName'] + newLine
+            msg = msg + "Address: " + uProfile['uAddress'] + newLine
+        }
+        $.each(sList, function () {
+            var sObject = this;
+            msg = msg + sObject.pName + " - " + sObject.qty + " x " + currency + sObject['price'] + " = " +
+                currency + sObject[
+                    'amount'] + newLine
+        });
+        if (uProfile == null || typeof (uProfile['uName']) == undefined || typeof (uProfile['uPhone']) == undefined ||
+            typeof (uProfile['uAddress']) == undefined) {
+            $("#whatsappURL").hide()
+            $(".loginPrompt").show()
+        } else {
+            $("#whatsappURL").attr("href", "https://wa.me/" + myNumber + "?text=" + msg)
+            $("#whatsappURL").show()
+            console.log("HHHHHHH")
+            $(".loginPrompt").hide()
+        }
+    }
+
+    function saveProfile() {
+        uProfile = {}
+        uProfile['uName'] = $("#uNameInput").val()
+        uProfile['uPhone'] = $("#uPhoneInput").val()
+        uProfile['uAddress'] = $("#uAddressInput").val()
+        uProfileJSON = JSON.stringify(uProfile)
+        localStorage.setItem("profile", uProfileJSON);
+        alert("Your profile has been saved successfully!")
+        prepareMsg()
+    }
+
+    $(document).ready(function () {
+
+        if (currentFlyerId != null) {
+            $("#landingViewer").hide()
+            $("#flyerViewer").show()
+
+        } else {
+            $("#flyerViewer").hide()
+            $("#landingViewer").show()
+        }
+        uProfile = localStorage.getItem("profile")
+        uProfile = JSON.parse(uProfile)
+        if (uProfile == null || typeof (uProfile['uName']) == undefined || typeof (uProfile['uPhone']) ==
+            undefined || typeof (uProfile['uAddress']) == undefined) {
+            $(".uProfile").show()
+            $("#whatsappURL").hide()
+            $(".loginPrompt").show()
+        } else {
+            $("#uNameInput").val(uProfile["uName"])
+            $("#uPhoneInput").val(uProfile["uPhone"])
+            $("#uAddressInput").val(uProfile["uAddress"])
+            $(".loginPrompt").hide()
+        }
+        $("#photo").attr('src',
+            "flyers/" + currentFlyerId + "/flyer.jpg"
+        );
+
+
+
+        console.log(pList)
+        $('img').imgAreaSelect({
+            handles: true,
+            onSelectEnd: function (img, selection) {
+                cartAction(selection.x1, selection.y1, "add")
+                console.log('x1: ' + selection.x1 + '; y1: ' + selection.y1);
+                $("#x1").val(selection.x1)
+                console.log('x2: ' + selection.x2 + '; y2: ' + selection.y2);
+                $("#x2").val(selection.x2)
+                $("#y1").val(selection.y1)
+                $("#y2").val(selection.y2)
+            },
+            onSelectStart: function (img, selection) {
+                $("#pName").val('')
+            }
+        });
+    });
+
+    function addProduct() {
+        var pInfo = {}
+        pInfo['pName'] = $("#pName").val()
+        pInfo['pPrice'] = $("#pPrice").val()
+        pInfo['pDescription'] = $("#pDescription").val()
+        pInfo['pSKU'] = $("#pSKU").val()
+        pInfo['x1'] = $("#x1").val()
+        pInfo['x2'] = $("#x2").val()
+        pInfo['y1'] = $("#y1").val()
+        pInfo['y2'] = $("#y2").val()
+
+        pList.push(pInfo)
+        console.log(pList)
+        renderPList()
+        saveList()
+    }
+
+    function renderPList() {
+        $("#pLists").html("")
+        i = 0;
+        $.each(pList, function () {
+            i++;
+            var pObject = this;
+            pHTML = "<span class='pName'>" + pObject['pName'] + "<span class='pPrice'>" + pObject['pPrice'] +
+                "<span class='pDescription'>" + pObject['pDescription']
+            pHTML = pHTML + "<br>"
+            $("#pLists").append(pHTML)
+
+        });
+        if (localStorage.getItem(currentFlyerId) != null) {
+            sList = JSON.parse(localStorage.getItem(currentFlyerId))
+            renderQty()
+        }
+    }
+
+    function getObjects(obj, key, val) {
+        var newObj = false;
+        $.each(obj, function () {
+            var testObject = this;
+            $.each(testObject, function (k, v) {
+                //alert(k);
+                if (val == v && k == key) {
+                    alert("matched")
+                    newObj = testObject;
+                }
+            });
+        });
+        return newObj;
+    }
+
+    $(".overlay-close").click(function (e) {
+        var parentOffset = $(this).parent().offset();
+        //or $(this).offset(); if you really just want the current element's offset
+        var relX = e.pageX - parentOffset.left;
+        var relY = e.pageY - parentOffset.top;
+        alert(relX)
+        // cartAction(relX - 15, relY - 15, "remove")
+    });
+
+    $("#photo").mousedown(function (e) {
+
+        if (e.button == 2) {
+            var parentOffset = $(this).parent().offset();
+            //or $(this).offset(); if you really just want the current element's offset
+            var relX = e.pageX - parentOffset.left;
+            var relY = e.pageY - parentOffset.top;
+            cartAction(relX - 15, relY - 15, "remove")
+            return false;
+        }
+        return true;
+    });
+
+    function renderQty() {
+        // html = '<span class="col-sm-11">Cart items</span><span onclick="$("#cart-items").hide()" class="col-sm-1 pull-right">X</span>'
+        $("#cart-item-list").html("")
+        qty = 0;
+        i = 0;
+        cartTotal = 0;
+        $.each(sList, function () {
+            i++;
+            var sObject = this;
+            if (sObject.qty > 0) {
+                cartHTML = "<div class='col-sm-12 row'><span class='col-xs-6 pName'>" + sObject.pName +
+                    "</span>" +
+                    "<span class='col-xs-2 pPrice'>" + sObject.price + "</span>" +
+                    "<span class='col-xs-2 pQty'> " + sObject.qty + "</span>" +
+                    "<span class='col-xs-2 pull-right pAmount'>" + sObject.amount + "</span></div><br>";
+                qty = qty + sObject.qty;
+                $("#cartQty").html(qty)
+                $("#cart-item-list").append(cartHTML)
+                cartTotal = cartTotal + sObject.amount;
+                $("#cartTotal").html("Total amount: " + currency + cartTotal.toFixed(2))
+            }
+            $.each(pList, function () {
+                // console.log(cartHTML)
+                var pObject = this;
+                // console.log("PObject=>SKU => "+pObject.pSKU)
+                if (sObject.flyerId == currentFlyerId && pObject.pSKU == sObject.pSKU) {
+                    $('#flyerImg').append('<div style="top:' + pObject.y1 + '; left:' + (parseFloat(
+                            pObject.x1) + 20) +
+                        '" class="overlay"><center>' + sObject.qty + '</center></div>');
+                    $('#flyerImg').append('<div style="top:' + pObject.y1 + '; left:' + (parseFloat(
+                            pObject.x1) + 70) +
+                        '" class="overlay-close pull-right" onclick = "cartAction(' + (
+                            parseFloat(
+                                pObject.x1) + 20) +
+                        ', ' + pObject.y1 + ',null)"><center>-</center></div>');
+                }
+            });
+
+            prepareMsg()
+        });
+    }
+
+    function cartAction(x, y, action) {
+        var sInfo = {}
+        var newObj = false;
+        $.each(pList, function () {
+            var pObject = this;
+            if (x >= pObject.x1 && x <= pObject.x2 && y >= pObject.y1 && y <= pObject.y2) {
+                // alert("Matched product => " + pObject.pName + " $."+pObject.pPrice)
+                if (action == "add")
+                    sInfo['qty'] = 1
+                else
+                    sInfo['qty'] = 0
+                isMatched = false;
+                $.each(sList, function () {
+                    var sObject = this;
+                    if (sObject.flyerId == currentFlyerId && sObject.pSKU == pObject.pSKU) {
+                        isMatched = true;
+
+                        if (action == "add") {
+                            sObject['qty'] = sObject['qty'] + 1
+                        } else {
+                            sObject['qty'] = sObject['qty'] - 1
+                        }
+                        if (sObject['qty'] <= 0) {
+                            sObject['qty'] = 0
+                            sObject['amount'] = 0
+                        } else {
+                            sObject['amount'] = sObject['qty'] * sObject['price']
+                        }
+                        sInfo['qty'] = sObject['qty']
+                    }
+                });
+                setTimeout(function () {
+                    if (isMatched == false) {
+                        sInfo['flyerId'] = currentFlyerId;
+                        sInfo['pSKU'] = pObject.pSKU;
+                        sInfo['pName'] = pObject.pName
+                        sInfo['price'] = parseFloat(pObject.pPrice)
+                        sInfo['amount'] = sInfo['price']
+                        sList.push(sInfo)
+                    }
+                    renderQty()
+                    localStorage.setItem(currentFlyerId, JSON.stringify(sList))
+                }, 100);
+                console.log(sList)
+
+            }
+        });
+        return newObj;
+    }
+
+    function saveList() {
+        $("#exportItems").val(JSON.stringify(pList))
+    }
+
+    function exportList() {
+        // var container = document.querySelector('textarea');
+        var container = document.getElementById('exportItems')
+        // var anchor = document.querySelector('a');
+        var anchor = document.getElementById("exportList")
+        anchor.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(container.value);
+        anchor.download = 'export.json';
+    }
+
+    function importList() {
+        var newList = prompt("Please copy paste the valid JSON", "");
+        pList = JSON.parse(newList)
+        renderPList()
+    }
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-126046157-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-126046157-1');
+</script>
